@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <termio.h>
 
 using namespace std;
 
@@ -133,6 +137,7 @@ void DataBase::getAll()
 
 int main()
 {
+    system("export TERM=xterm");
     DataBase base;
     int command;
     string name;
@@ -213,7 +218,9 @@ int main()
             break;
         }
 
-
+        string t;
+        cin >> t;
+        system("clear");
         cout << "Введите команду для работы с базой данных (число)" << endl;
         cout << "1: Добавление студента в базу" << endl;
         cout << "2: Добавление преподавателя в базу" << endl;
@@ -228,4 +235,6 @@ int main()
 
     return 0;
 }
+
+
 

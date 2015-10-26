@@ -1,24 +1,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <termio.h>
-
 using namespace std;
 
 class Person {
 public:
-    int age;
+    string age;
     string birthDate;
     string name;
     string lastName;
 
-public:
-    Person() {
-    }
-    Person(int age, string birthDate, string name, string lastName) {
+    Person(string age, string birthDate, string name, string lastName) {
         this->age = age;
         this->birthDate = birthDate;
         this->name = name;
@@ -34,60 +27,58 @@ class Lecture : public Person
 public:
     string subject;
     string cafedr;
-Lecture() {}
-Lecture(int age, string birthDate, string name, string lastName, string subject, string cafedr) : Person( age, birthDate, name, lastName)
+
+Lecture(string age, string birthDate, string name, string lastName, string subject, string cafedr) : Person( age, birthDate, name, lastName)
 {
     this->subject = subject;
     this->cafedr = cafedr;
 }
 ~Lecture(){}
-
-
 };
 
 class Student : public Person
 {
-
 public:
     string course;
-    int group;
-Student() {}
-Student(int age, string birthDate, string name, string lastName, string course, int group) : Person(age, birthDate, name, lastName)
+    string group;
+
+Student(string age, string birthDate, string name, string lastName, string course, string group) : Person(age, birthDate, name, lastName)
 {
     this->course = course;
     this->group = group;
 }
 ~Student(){}
-
 };
 
 
 class DataBase
 {
-    vector<Lecture> lectures;
-    vector<Student> students;
 public:
-    void addStudent(int age, string birthDate, string name, string lastName, string course, int group);
-    void addLecture(int age, string birthDate, string name, string lastName, string subject, string cafedr);
+    void addStudent(string age, string birthDate, string name, string lastName, string course, string group);
+    void addLecture(string age, string birthDate, string name, string lastName, string subject, string cafedr);
     void getStudentNum(int num);
     void getLectureNum(int num);
     void getAllStudents();
     void getAllLectures();
     void getAll();
-};
 
-void DataBase::addLecture(int age, string birthDate, string name, string lastName, string subject, string cafedr)
+private:
+    vector<Lecture> lectures;
+    vector<Student> students;
+};
+//---------------------------------------------------------------------------------------
+
+
+
+
+void DataBase::addLecture(string age, string birthDate, string name, string lastName, string subject, string cafedr)
 {
-    Lecture *lecture = new Lecture(age, birthDate, name, lastName, subject, cafedr);
-    lectures.push_back(*lecture);
-    delete lecture;
+    lectures.push_back(*(new Lecture(age, birthDate, name, lastName, subject, cafedr)));
 }
 
-void DataBase::addStudent(int age, string birthDate, string name, string lastName, string course, int group)
+void DataBase::addStudent(string age, string birthDate, string name, string lastName, string course, string group)
 {
-    Student *student = new Student(age, birthDate, name, lastName, course, group);
-    students.push_back(*student);
-    delete student;
+    students.push_back(*(new Student(age, birthDate, name, lastName, course, group)));
 }
 
 void DataBase::getStudentNum(int num)
@@ -135,17 +126,18 @@ void DataBase::getAll()
     getAllStudents();
 }
 
+
+//------------------------------------------------------------------------------
 int main()
 {
-    system("export TERM=xterm");
     DataBase base;
     int command;
     string name;
     string lastName;
     string birthDate;
-    int age;
+    string age;
     string course;
-    int group;
+    string group;
     string subject;
     string cafedr;
     int num;
@@ -160,6 +152,7 @@ int main()
     cout << "7: Получение информации о всех в базе " << endl;
     cout << "0: выход" << endl;
     cin >> command;
+    cout << endl;
     while(command)
     {
 
@@ -218,9 +211,16 @@ int main()
             break;
         }
 
-        string t;
-        cin >> t;
-        system("clear");
+
+        cout << endl << "Нажмите любую клавишу, чтобы продолжить";
+        cin.ignore().get();
+
+        #ifdef __linux
+        system("clear"); // очищает экран терминала линукса. Для винды использовать system("cls")
+        #else
+        system("cls");
+        #endif
+
         cout << "Введите команду для работы с базой данных (число)" << endl;
         cout << "1: Добавление студента в базу" << endl;
         cout << "2: Добавление преподавателя в базу" << endl;
@@ -231,6 +231,7 @@ int main()
         cout << "7: Получение информации о всех в базе " << endl;
         cout << "0: выход" << endl;
         cin >> command;
+        cout << endl;
     }
 
     return 0;

@@ -83,24 +83,39 @@ void DataBase::addStudent(string age, string birthDate, string name, string last
 
 void DataBase::getStudentNum(int num)
 {
-    cout << "Cтудент №" << num << endl;
-    cout << "Имя: " << students[num - 1].name << endl;
-    cout << "Фамилия: " << students[num - 1].lastName << endl;
-    cout << "Возраст: " << students[num - 1].age << endl;
-    cout << "Дата рождения: " << students[num - 1].birthDate << endl;
-    cout << "Направление обучения: " << students[num - 1].course << endl;
-    cout << "Группа: " << students[num - 1].group << endl;
+    if (num > 0 && num <= students.size())
+    {
+        cout << "Cтудент №" << num << endl;
+        cout << "Имя: " << students[num - 1].name << endl;
+        cout << "Фамилия: " << students[num - 1].lastName << endl;
+        cout << "Возраст: " << students[num - 1].age << endl;
+        cout << "Дата рождения: " << students[num - 1].birthDate << endl;
+        cout << "Направление обучения: " << students[num - 1].course << endl;
+        cout << "Группа: " << students[num - 1].group << endl;
+    }
+    else
+    {
+        cout << endl << "Такого студента нет в базе!" << endl;
+    }
 }
 
 void DataBase:: getLectureNum(int num)
 {
-    cout << "Преподаватель №" << num << endl;
-    cout << "Имя: " << lectures[num - 1].name << endl;
-    cout << "Фамилия: " << lectures[num - 1].lastName << endl;
-    cout << "Возраст: " << lectures[num - 1].age << endl;
-    cout << "Дата рождения: " << lectures[num - 1].birthDate << endl;
-    cout << "Предмет: " << lectures[num - 1].subject << endl;
-    cout << "Кафедра: " << lectures[num - 1].cafedr << endl;
+    if (num > 0 && num <= lectures.size())
+    {
+        cout << "Преподаватель №" << num << endl;
+        cout << "Имя: " << lectures[num - 1].name << endl;
+        cout << "Фамилия: " << lectures[num - 1].lastName << endl;
+        cout << "Возраст: " << lectures[num - 1].age << endl;
+        cout << "Дата рождения: " << lectures[num - 1].birthDate << endl;
+        cout << "Предмет: " << lectures[num - 1].subject << endl;
+        cout << "Кафедра: " << lectures[num - 1].cafedr << endl;
+    }
+    else
+    {
+        cout << endl << "Такого преподавателя нет в базе!" << endl;
+    }
+
 }
 
 void DataBase:: getAllLectures()
@@ -193,7 +208,6 @@ int main()
             cout << "Введите номер:" << endl;
             cin >> num;
             base.getStudentNum(num);
-
             break;
         case 4:
             cout << "Введите номер:" << endl;
